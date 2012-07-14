@@ -13,11 +13,12 @@ Here's an example:
 
 ``` ruby
 it "doesn't kill my method" do
-  obj = Object.new
-  id = obj.object_id
-  obj.stub_return_of(:object_id).with(:nil?).and_return('nope')
-  obj.object_id.should == id
-  obj.object_id.nil?.should == 'nope'
+  class T; def me; "heeyyyy"; end; end;
+  t = T.new
+  orig = t.me
+  t.stub_return_of(:me).with(:to_sym).and_return(:heya)
+  t.me.should == orig
+  t.me.to_sym.should == :heya
 end
 ```
 
