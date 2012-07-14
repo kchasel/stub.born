@@ -1,3 +1,4 @@
+require 'pry'
 module RSpec
   module Mocks
     module Methods
@@ -27,19 +28,45 @@ class ReturnStub
   end
 
   def with(returns_message)
+    @calls ||= []
+    @stub = nil
+    @return_val = nil
     @exp = @receiver.stub(@message_sym) do
       val = @proc.call
-      s = val.stub(returns_message.to_sym)
-      s.and_return(@val) if @val
-      val
+      if val != @return_val || @stub.nil?
+        @return_val = val
+        @stub = @return_val.stub(returns_message)
+      end
+      if !returns_message.is_a?(Hash)
+        #s.and_return(@val)
+        @calls.each { |call| @stub.send(call[:meth], *call[:args]) }
+      end
+      @calls = []
+      @return_val
     end
     self
   end
 
-  def and_return(val)
-    unless @exp
-      raise WithRequired, "No method to stub on the return value specified using #with"
+  def method_missing(m, *args, &block)
+    if method_of_expectations?(m)
+      @calls << { meth: m, 
+                  args: args,
+                  block: block
+                }
+      self
+    else
+      super
     end
-    @val = val
   end
+
+  def respond_to?(m)
+    method_of_expectations?(m) || super
+  end
+
+  private
+
+  def method_of_expectations?(meth)
+    RSpec::Mocks::MessageExpectation.instance_methods.include?(meth)
+  end
+
 end
