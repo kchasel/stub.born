@@ -1,8 +1,9 @@
-ReturnStub
+Stub.born
 ==========
 
-Returnstub (which has a terrible name and i'm going to change it)
-stubs the return value of a stubbed method. This is because RSpec's #stub_chain
+Stub.born stubbornly refuses to lose the return value of a stubbed
+method, and instead stubs the return value itself with whatever you
+want. This is because RSpec's #stub_chain
 is awesome but it will stub the chain-forming methods to nil, so you've
 lost them completely.
 
@@ -30,4 +31,6 @@ TODO
 ----
 
 * TEST IT
-* 
+* it's buggy so fix all that
+
+Many thanks to dtb for the excellent double-entendre name
