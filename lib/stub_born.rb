@@ -62,7 +62,8 @@ class ReturnStub
   private
 
   def method_of_expectations?(meth)
-    RSpec::Mocks::MessageExpectation.instance_methods.include?(meth)
+    @allowed_methods ||= RSpec::Mocks::MessageExpectation.instance_methods
+    @allowed_methods.include?(meth)
   end
 
 end
