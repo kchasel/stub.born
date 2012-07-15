@@ -1,4 +1,3 @@
-require 'pry'
 module RSpec
   module Mocks
     module Methods
@@ -12,8 +11,6 @@ module RSpec
 end
 
 class ReturnStub
-
-  class WithRequired < StandardError; end
 
   def initialize(receiver, message)
     @receiver = receiver
@@ -38,7 +35,6 @@ class ReturnStub
         @stub = @return_val.stub(returns_message)
       end
       if !returns_message.is_a?(Hash)
-        #s.and_return(@val)
         @calls.each { |call| @stub.send(call[:meth], *call[:args]) }
       end
       @calls = []
