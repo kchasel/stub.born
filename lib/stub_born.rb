@@ -33,11 +33,10 @@ class ReturnStub
       if val != @return_val || @stub.nil?
         @return_val = val
         @stub = @return_val.stub(returns_message)
+        if !returns_message.is_a?(Hash)
+          @calls.each { |call| @stub.send(call[:meth], *call[:args]) }
+        end
       end
-      if !returns_message.is_a?(Hash)
-        @calls.each { |call| @stub.send(call[:meth], *call[:args]) }
-      end
-      @calls = []
       @return_val
     end
     self

@@ -32,5 +32,8 @@ TODO
 
 * TEST IT
 * it's buggy so fix all that
+* make it work for other MessageExpectation situations (should_receive,
+  etc.). This most likely involves more tightly coupling with the
+  MessageExpectation class itself.
 
 Many thanks to dtb for the excellent double-entendre name
