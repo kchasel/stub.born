@@ -16,7 +16,6 @@ class ReturnStub
     @receiver = receiver
     @message_sym = message.to_sym
     meth = @receiver.method(@message_sym)
-    raise MethodMissing unless meth
     if @receiver.respond_to?("obfuscated_by_rspec_mocks__#{message.to_s}")
       @receiver.unstub(@message_sym)
       meth = @receiver.method(@message_sym)
